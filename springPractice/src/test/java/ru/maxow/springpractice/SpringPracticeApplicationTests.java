@@ -1,10 +1,10 @@
-package ru.maxow.practicespring;
+package ru.maxow.springpractice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class PracticeSpringApplicationTests {
+class SpringPracticeApplicationTests {
 
   @Test
   void contextLoads() {
