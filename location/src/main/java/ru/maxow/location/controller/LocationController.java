@@ -60,7 +60,7 @@ public class LocationController {
         Location location = repository.findByName(name)
             .orElseThrow(() -> new RuntimeException("Location not found: " + name));
         
-        String url = String.format("http://localhost:8082/weather?lat=%s&lon=%s", 
+        String url = String.format("http://weather/weather?lat=%s&lon=%s", 
             location.getLatitude(), location.getLongitude());
         
         return restTemplate.getForObject(url, Weather.class);

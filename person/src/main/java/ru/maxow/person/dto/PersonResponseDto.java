@@ -1,8 +1,13 @@
 package ru.maxow.person.dto;
 
+import java.time.LocalDate;
+
 public record PersonResponseDto(
     Long id,
-    String name,
+    String firstname,
+    String surname,
+    String lastname,
+    LocalDate birthday,
     String location
 ) {
 }

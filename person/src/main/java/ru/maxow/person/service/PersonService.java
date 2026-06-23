@@ -35,6 +35,20 @@ public class PersonService {
     return personMapper.toDto(savedPerson);
   }
 
+  public PersonResponseDto update(Long id, PersonCreateDto personCreateDto) {
+    Person person = personRepository.findById(id)
+        .orElseThrow(() -> new NotFoundException(Person.class, id));
+    
+    person.setFirstname(personCreateDto.firstname());
+    person.setSurname(personCreateDto.surname());
+    person.setLastname(personCreateDto.lastname());
+    person.setBirthday(personCreateDto.birthday());
+    person.setLocation(personCreateDto.location());
+    
+    Person updatedPerson = personRepository.save(person);
+    return personMapper.toDto(updatedPerson);
+  }
+
   public void deleteById(Long id) {
     personRepository.deleteById(id);
   }
