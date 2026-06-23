@@ -9,6 +9,7 @@
         <option value="$PROJECT_DIR$/location/pom.xml" />
         <option value="$PROJECT_DIR$/weather/pom.xml" />
         <option value="$PROJECT_DIR$/person/pom.xml" />
+        <option value="$PROJECT_DIR$/discovery-server/pom.xml" />
       </list>
     </option>
   </component>
