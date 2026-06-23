@@ -5,6 +5,10 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/practiceSpring/pom.xml" />
+        <option value="$PROJECT_DIR$/common/pom.xml" />
+        <option value="$PROJECT_DIR$/location/pom.xml" />
+        <option value="$PROJECT_DIR$/weather/pom.xml" />
+        <option value="$PROJECT_DIR$/person/pom.xml" />
       </list>
     </option>
   </component>
