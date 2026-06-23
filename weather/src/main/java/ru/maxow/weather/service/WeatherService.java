@@ -1,30 +1,27 @@
 package ru.maxow.weather.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-import ru.maxow.common.util.NotFoundException;
-import ru.maxow.weather.dto.WeatherResponseDto;
-import ru.maxow.weather.mapper.WeatherMapper;
-import ru.maxow.weather.repository.WeatherRepository;
-
-import java.util.List;
+import org.springframework.web.client.RestTemplate;
+import ru.maxow.weather.model.Root;
 
 @Service
 @RequiredArgsConstructor
 public class WeatherService {
 
-  private final WeatherRepository weatherRepository;
-  private final WeatherMapper weatherMapper;
+  private final RestTemplate restTemplate;
 
-  public List<WeatherResponseDto> findAll() {
-    return weatherRepository.findAll().stream()
-        .map(weatherMapper::toDto)
-        .toList();
-  }
+  @Value("${openweathermap.api-url}")
+  private String apiUrl;
 
-  public WeatherResponseDto findByLatAndLon(Double latitude, Double longitude) {
-    return weatherRepository.findByLatitudeAndLongitude(latitude, longitude)
-        .map(weatherMapper::toDto)
-        .orElseThrow(() -> new NotFoundException("Weather not found for lat " + latitude + " and lon " + longitude));
+  @Value("${openweathermap.api-key}")
+  private String apiKey;
+
+  @Cacheable(value = "weather", key = "#lat + '_' + #lon" , unless = "#result == null")
+  public Root getWeather(Double lat, Double lon) {
+    String url = String.format("%s?lat=%s&lon=%s&appid=%s&units=metric", apiUrl, lat, lon, apiKey);
+    return restTemplate.getForObject(url, Root.class);
   }
 }
