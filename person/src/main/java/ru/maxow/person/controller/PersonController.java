@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 import ru.maxow.person.dto.PersonCreateDto;
 import ru.maxow.person.dto.PersonResponseDto;
 import ru.maxow.person.model.Weather;
@@ -17,7 +16,6 @@ import java.util.List;
 @RequestMapping("/person")
 public class PersonController {
     private final PersonService personService;
-    private final RestTemplate restTemplate;
 
     @GetMapping
     public List<PersonResponseDto> findAll() {
@@ -48,18 +46,7 @@ public class PersonController {
 
     @GetMapping("/{id}/weather")
     public ResponseEntity<Weather> getWeather(@PathVariable Long id) {
-        try {
-            PersonResponseDto person = personService.findById(id);
-            if (person.location() != null) {
-                Weather weather = restTemplate.getForObject(
-                        "http://location/location/weather?name=" + person.location(),
-                        Weather.class
-                );
-                return ResponseEntity.ok(weather);
-            }
-        } catch (Exception e) {
-            // Person not found
-        }
-        return ResponseEntity.notFound().build();
+        Weather weather = personService.getPersonWeather(id);
+        return ResponseEntity.ok(weather);
     }
 }
