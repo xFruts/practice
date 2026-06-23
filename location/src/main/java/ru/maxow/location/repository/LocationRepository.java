@@ -1,7 +1,12 @@
 package ru.maxow.location.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import ru.maxow.location.entity.Location;
+import org.springframework.stereotype.Repository;
+import ru.maxow.location.model.Location;
 
-public interface LocationRepository extends JpaRepository<Location, Long> {
+import java.util.Optional;
+
+@Repository
+public interface LocationRepository extends JpaRepository<Location, Integer> {
+    Optional<Location> findByName(String name);
 }
